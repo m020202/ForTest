@@ -1,4 +1,4 @@
-package com.example.demo.domain;
+package com.example.demo.domain.animal;
 
 public class AnimalFactory {
     public static Animal createAnimal(String type) {
@@ -9,6 +9,4 @@ public class AnimalFactory {
         }
         throw new IllegalStateException("Unknown animal type");
     }
-
-    public Animal()
 }

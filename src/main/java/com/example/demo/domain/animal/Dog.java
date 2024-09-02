@@ -1,4 +1,6 @@
-package com.example.demo.domain;
+package com.example.demo.domain.animal;
+
+import com.example.demo.domain.animal.Animal;
 
 public class Dog implements Animal {
     @Override
