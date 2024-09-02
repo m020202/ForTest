@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.domain.Movie;
 import com.example.demo.domain.Person;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,5 +14,9 @@ public class ForTestApplication {
 		Person p2 = Person.ofAge(30);
 		System.out.println(p1.getName());
 		System.out.println(p2.getAge());
+
+		Movie m1 = Movie.getInstance();
+		Movie m2 = Movie.getInstance();
+		System.out.println(m1 == m2);
 	}
 }
