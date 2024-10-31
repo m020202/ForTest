@@ -14,5 +14,7 @@ public class CoffeeMachine {
         this.coffeeBeans = coffeeBeans;
     }
 
-
+    public void print() {
+        coffeeBeans.grind();
+    }
 }
