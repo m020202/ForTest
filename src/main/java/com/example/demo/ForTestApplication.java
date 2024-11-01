@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.coffee.CoffeeMachine;
+import com.example.demo.config.MachineConfiguration;
 import com.example.demo.domain.Movie;
 import com.example.demo.domain.Person;
 import jakarta.persistence.EntityManager;

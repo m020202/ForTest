@@ -1,6 +1,7 @@
 package com.example.demo.config;
 
 import com.example.demo.coffee.CoffeeBeans;
+import com.example.demo.coffee.CoffeeMachine;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -9,7 +10,7 @@ import org.springframework.context.annotation.Import;
 @Import(BeansConfiguration.class)
 public class MachineConfiguration {
     @Bean
-    public MachineConfiguration machineConfiguration(CoffeeBeans coffeeBeans) {
-        return new MachineConfiguration();
+    public CoffeeMachine coffeeMachine(CoffeeBeans coffeeBeans) {
+        return new CoffeeMachine(coffeeBeans);
     }
 }
