@@ -1,10 +1,9 @@
 package com.example.demo.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.demo.domain.enums.MemberStatus;
+import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -20,4 +19,7 @@ public class Member {
 
     private Integer age;
 
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault("VARCHAR(15) DEFAULT 'ACTIVE'")
+    private MemberStatus memberStatus;
 }
