@@ -1,8 +1,7 @@
 package com.example.demo.repository;
 
-import com.example.demo.domain.Person;
+import com.example.demo.domain.Member;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -10,8 +9,8 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class MemberRepository {
     private final EntityManager em;
-    public Long save(Person person) {
-        em.persist(person);
-        return person.getId();
+    public Long save(Member member) {
+        em.persist(member);
+        return member.getId();
     }
 }
