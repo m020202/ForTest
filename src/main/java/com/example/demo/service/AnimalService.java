@@ -11,8 +11,8 @@ public class AnimalService {
     @Qualifier("dog")
     private Animal animal;
 
-    public void animalSound() {
-        animal.sound();
+    public String animalSound() {
+        return animal.sound();
     }
 
 }

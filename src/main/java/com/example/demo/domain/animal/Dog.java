@@ -4,7 +4,7 @@ import com.example.demo.domain.animal.Animal;
 
 public class Dog implements Animal {
     @Override
-    public void sound() {
-        System.out.println("Bark");
+    public String sound() {
+        return "Bark";
     }
 }
