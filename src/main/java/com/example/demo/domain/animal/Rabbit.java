@@ -2,8 +2,7 @@ package com.example.demo.domain.animal;
 
 public class Rabbit implements Animal {
     @Override
-    public String sound() {
-
-        return "emmmmmmmmm";
+    public void sound() {
+        System.out.println("emmmmmmmmm");
     }
 }

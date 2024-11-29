@@ -23,8 +23,7 @@ class AnimalServiceTest {
 
     @Test
     void testAnimalSound() {
-        String sound = animalService.animalSound();
-        System.out.println(sound);
+        animalService.animalSound();
         //Assertions.assertThat(sound).isEqualTo("Bark");
     }
 
