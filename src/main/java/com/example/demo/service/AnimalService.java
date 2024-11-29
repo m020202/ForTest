@@ -8,13 +8,17 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AnimalService {
 
+    @Qualifier("dog")
     private final Animal animal;
 
-    public AnimalService(@Qualifier("dog") Animal animal) {
-        this.animal = animal;
-    }
+//    private final Animal animal;
+//
+//    public AnimalService(@Qualifier("dog") Animal animal) {
+//        this.animal = animal;
+//    }
 
     public String animalSound() {
         return animal.sound();
