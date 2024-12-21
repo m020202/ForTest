@@ -19,6 +19,9 @@ public class JoinService {
             return;
         }
 
+        String password = bCryptPasswordEncoder.encode(joinDTO.getPassword());
+        joinDTO.setPassword(password);
+
         Member member = MemberConverter.toMember(joinDTO);
         memberRepository.save(member);
     }
