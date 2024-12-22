@@ -1,4 +1,7 @@
 spring:
+  jwt:
+    secret: vmfhaltmskdlstkfkdgodyroqkfwkdbalroqkfwkdbalaaaaaaaaaaaaaaaabbbbb
+
   datasource:
     url: jdbc:mysql://localhost:3306/study
     username: root
@@ -17,8 +20,6 @@ spring:
         hbm2ddl:
           auto: create
         default_batch_fetch_size: 1000
-  jwt:
-    secret: vmfhaltmskdlstkfkdgodyroqkfwkdbalroqkfwkdbalaaaaaaaaaaaaaaaabbbbb
 
 springdoc:
   swagger-ui:
