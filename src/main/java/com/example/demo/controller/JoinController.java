@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
-
-import com.example.demo.converter.MemberConverter;
 import com.example.demo.dto.JoinDTO;
 import com.example.demo.service.JoinService;
-import com.example.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
