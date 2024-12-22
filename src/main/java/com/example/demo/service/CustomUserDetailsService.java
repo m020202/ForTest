@@ -18,6 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Member member = memberRepository.findByName(username);
+
         if(isValidated(member)) {
             return new CustomUserDetails(MemberConverter.forUserDetails(member));
         }
@@ -26,6 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private Boolean isValidated(Member member) {
+
         return (member != null) ? true : false;
     }
 }

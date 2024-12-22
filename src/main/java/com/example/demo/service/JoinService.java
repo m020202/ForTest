@@ -15,7 +15,7 @@ public class JoinService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public void join(JoinDTO joinDTO) {
-        if (isExist(joinDTO.getUsername())) {
+        if (isExist(joinDTO.getName())) {
             return;
         }
 

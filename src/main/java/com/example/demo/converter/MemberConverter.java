@@ -7,7 +7,7 @@ import com.example.demo.dto.member.MemberDTO;
 public class MemberConverter {
     public static Member toMember(JoinDTO joinDTO) {
         return Member.builder()
-                .name(joinDTO.getUsername())
+                .name(joinDTO.getName())
                 .password(joinDTO.getPassword())
                 .role("ROLE_ADMIN")
                 .build();
