@@ -35,9 +35,9 @@ public class JWTUtil {
         return Jwts.builder()
                 .claim("name", name)
                 .claim("role", role)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + expiredMs))
-                .signWith(secretKey)
+                .issuedAt(new Date(System.currentTimeMillis())) // 현재 발행 시간
+                .expiration(new Date(System.currentTimeMillis() + expiredMs)) // 소멸 시간
+                .signWith(secretKey) // 시크릿 키를 활용하여 signature를 암호화
                 .compact();
     }
 }
