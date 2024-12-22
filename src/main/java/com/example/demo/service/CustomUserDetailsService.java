@@ -18,10 +18,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Member member = memberRepository.findByName(username);
-        if(member != null) {
+        if(isValidated(member)) {
             return new CustomUserDetails(MemberConverter.forUserDetails(member));
         }
 
         return null;
+    }
+
+    private Boolean isValidated(Member member) {
+        return (member != null) ? true : false;
     }
 }
