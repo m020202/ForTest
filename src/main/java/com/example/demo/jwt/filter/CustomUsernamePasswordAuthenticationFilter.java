@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,7 @@ import java.util.Iterator;
 public class CustomUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
+    private final RedisTemplate redisTemplate;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -35,6 +37,15 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
+        // JWT 생성 및 응답 헤더에 세팅
+        String token = createToken(authentication);
+        response.addHeader("Authorization", "Bearer " + token);
+
+        // 생성된 토큰 redis에 저장
+        redisTemplate.opsForValue().set(token, "1");
+    }
+
+    private String createToken(Authentication authentication) {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String name = customUserDetails.getUsername();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -42,8 +53,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
 
-        String token = jwtUtil.createJwt(name, role, 60 * 60 * 10L);
-        response.addHeader("Authorization", "Bearer " + token);
+        return jwtUtil.createJwt(name, role, 60 * 60 * 10L);
     }
 
     @Override
