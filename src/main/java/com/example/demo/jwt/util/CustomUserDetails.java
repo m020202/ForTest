@@ -1,4 +1,4 @@
-package com.example.demo.jwt;
+package com.example.demo.jwt.util;
 
 import com.example.demo.dto.member.MemberDTO;
 import lombok.RequiredArgsConstructor;

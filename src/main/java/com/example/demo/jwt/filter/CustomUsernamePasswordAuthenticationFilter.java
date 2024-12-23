@@ -1,7 +1,7 @@
-package com.example.demo.filter;
+package com.example.demo.jwt.filter;
 
-import com.example.demo.jwt.CustomUserDetails;
-import com.example.demo.jwt.JWTUtil;
+import com.example.demo.jwt.util.CustomUserDetails;
+import com.example.demo.jwt.util.JWTUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

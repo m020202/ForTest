@@ -1,7 +1,7 @@
-package com.example.demo.controller;
+package com.example.demo.jwt.controller;
 
-import com.example.demo.dto.JoinDTO;
-import com.example.demo.service.JoinService;
+import com.example.demo.jwt.dto.JoinDTO;
+import com.example.demo.jwt.service.JoinService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

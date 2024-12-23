@@ -1,8 +1,8 @@
-package com.example.demo.service;
+package com.example.demo.jwt.service;
 
 import com.example.demo.converter.MemberConverter;
 import com.example.demo.domain.Member;
-import com.example.demo.jwt.CustomUserDetails;
+import com.example.demo.jwt.util.CustomUserDetails;
 import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

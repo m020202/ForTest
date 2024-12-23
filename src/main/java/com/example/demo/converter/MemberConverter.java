@@ -1,7 +1,7 @@
 package com.example.demo.converter;
 
 import com.example.demo.domain.Member;
-import com.example.demo.dto.JoinDTO;
+import com.example.demo.jwt.dto.JoinDTO;
 import com.example.demo.dto.member.MemberDTO;
 
 public class MemberConverter {

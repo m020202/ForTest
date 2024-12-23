@@ -1,8 +1,8 @@
-package com.example.demo.config;
+package com.example.demo.jwt.config;
 
-import com.example.demo.filter.CustomUsernamePasswordAuthenticationFilter;
-import com.example.demo.filter.JWTFilter;
-import com.example.demo.jwt.JWTUtil;
+import com.example.demo.jwt.filter.CustomUsernamePasswordAuthenticationFilter;
+import com.example.demo.jwt.filter.JWTFilter;
+import com.example.demo.jwt.util.JWTUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
