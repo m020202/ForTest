@@ -3,6 +3,7 @@ package com.example.demo.config;
 import com.example.demo.filter.CustomUsernamePasswordAuthenticationFilter;
 import com.example.demo.filter.JWTFilter;
 import com.example.demo.jwt.JWTUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -49,6 +54,23 @@ public class SecurityConfig {
                 // JWTFilter를 UsernamePasswordFilter 이전에 등록
                 .addFilterBefore(new JWTFilter(jwtUtil), CustomUsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(new CustomUsernamePasswordAuthenticationFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
+        http
+                .cors((customizer -> customizer
+                        .configurationSource(new CorsConfigurationSource() {
+                            @Override
+                            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                                CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+                                corsConfiguration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+                                corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
+                                corsConfiguration.setAllowCredentials(true);
+                                corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
+                                corsConfiguration.setMaxAge(3600L);
+
+                                return corsConfiguration;
+                            }
+                        })));
 
         return http.build();
     }
