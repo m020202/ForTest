@@ -1,6 +1,7 @@
 package com.example.demo.config;
 
 import com.example.demo.filter.CustomUsernamePasswordAuthenticationFilter;
+import com.example.demo.filter.JWTFilter;
 import com.example.demo.jwt.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -45,6 +46,8 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // JWTFilter를 UsernamePasswordFilter 이전에 등록
+                .addFilterBefore(new JWTFilter(jwtUtil), CustomUsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(new CustomUsernamePasswordAuthenticationFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
