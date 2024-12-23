@@ -18,9 +18,4 @@ public class JoinController {
         joinService.join(joinDTO);
         return "회원가입 성공!";
     }
-
-    @GetMapping
-    public String admin() {
-        return "admin 페이지입니다!";
-    }
 }
