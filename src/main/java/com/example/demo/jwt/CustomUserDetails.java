@@ -1,6 +1,5 @@
 package com.example.demo.jwt;
 
-import com.example.demo.domain.Member;
 import com.example.demo.dto.member.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

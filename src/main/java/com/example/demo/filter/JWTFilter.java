@@ -1,6 +1,5 @@
 package com.example.demo.filter;
 
-import com.example.demo.domain.Member;
 import com.example.demo.dto.member.MemberDTO;
 import com.example.demo.jwt.CustomUserDetails;
 import com.example.demo.jwt.JWTUtil;
