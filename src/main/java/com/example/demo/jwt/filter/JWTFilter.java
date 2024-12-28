@@ -30,12 +30,14 @@ public class JWTFilter extends OncePerRequestFilter {
         }
 
         String token = authorization.split(" ")[1];
-        if (isExpired(token)) {
+
+        if (!isInRedis(jwtUtil.getName(token), authorization)) {
             filterChain.doFilter(request, response);
+            System.out.println("Redis에 없음!!");
             return;
         }
 
-        if (!isInRedis(jwtUtil.getName(token), token)) {
+        if (isExpired(token)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -66,7 +68,9 @@ public class JWTFilter extends OncePerRequestFilter {
     }
 
     private Boolean isInRedis(String name, String token) {
-        if (redisTemplate.opsForValue().get(name).equals(token)) {
+        String value = (String) redisTemplate.opsForValue().get(name);
+
+        if (value.equals(token)) {
             return true;
         }
 

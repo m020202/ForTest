@@ -38,11 +38,11 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         // JWT 생성 및 응답 헤더에 세팅
-        String token = createToken(authentication);
-        response.addHeader("Authorization", "Bearer " + token);
+        String token = "Bearer " + createToken(authentication);
+        response.addHeader("Authorization", token);
 
         // 생성된 토큰 redis에 저장
-        redisTemplate.opsForValue().set(authentication.getName(), token, 60 * 60 * 10L);
+        redisTemplate.opsForValue().set(authentication.getName(), token);
 
     }
 
