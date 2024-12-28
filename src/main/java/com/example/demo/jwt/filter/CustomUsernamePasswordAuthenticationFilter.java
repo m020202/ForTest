@@ -16,6 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -42,7 +43,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         response.addHeader("Authorization", token);
 
         // 생성된 토큰 redis에 저장
-        redisTemplate.opsForValue().set(authentication.getName(), token);
+        redisTemplate.opsForValue().set(authentication.getName(), token, Duration.ofSeconds(60 * 60 * 10L));
 
     }
 
