@@ -42,7 +42,8 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         response.addHeader("Authorization", "Bearer " + token);
 
         // 생성된 토큰 redis에 저장
-        redisTemplate.opsForValue().set(token, "1");
+        redisTemplate.opsForValue().set(authentication.getName(), token, 60 * 60 * 10L);
+
     }
 
     private String createToken(Authentication authentication) {
