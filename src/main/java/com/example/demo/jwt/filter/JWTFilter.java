@@ -8,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -17,6 +18,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
     private final JWTUtil jwtUtil;
+    private final RedisTemplate redisTemplate;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -29,6 +31,11 @@ public class JWTFilter extends OncePerRequestFilter {
 
         String token = authorization.split(" ")[1];
         if (isExpired(token)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        if (!isInRedis(jwtUtil.getName(token), token)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -56,6 +63,14 @@ public class JWTFilter extends OncePerRequestFilter {
         }
 
         return true;
+    }
+
+    private Boolean isInRedis(String name, String token) {
+        if (redisTemplate.opsForValue().get(name).equals(token)) {
+            return true;
+        }
+
+        return false;
     }
 
     private Boolean isExpired(String token) {
