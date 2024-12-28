@@ -23,19 +23,13 @@ public class JWTFilter extends OncePerRequestFilter {
         String authorization = request.getHeader("Authorization");
 
         if (isValidated(authorization) == false) {
-            System.out.println("token null!!");
             filterChain.doFilter(request, response);
-
             return ;
         }
 
-        System.out.println("authorization now");
-
         String token = authorization.split(" ")[1];
         if (isExpired(token)) {
-            System.out.println("token이 만료되었습니다");
             filterChain.doFilter(request, response);
-
             return;
         }
 
