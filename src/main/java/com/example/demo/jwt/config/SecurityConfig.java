@@ -54,7 +54,7 @@ public class SecurityConfig {
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // JWTFilter를 UsernamePasswordFilter 이전에 등록
-                .addFilterBefore(new JWTFilter(jwtUtil), CustomUsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTFilter(jwtUtil, redisTemplate), CustomUsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(new CustomUsernamePasswordAuthenticationFilter(authenticationManager(authenticationConfiguration), jwtUtil, redisTemplate), UsernamePasswordAuthenticationFilter.class);
 
         http
