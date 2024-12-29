@@ -4,6 +4,8 @@ import com.example.demo.jwt.dto.JoinDTO;
 import com.example.demo.jwt.service.LoginService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +22,12 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public String logout(HttpServletRequest servletRequest) {
+    public String logout(HttpServletRequest request) {
+        String token = request.getHeader("Authorization").split(" ")[1];
+        loginService.logout(token);
+
         return "로그아웃 성공!";
     }
 }
+
+
