@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class JoinController {
+public class LoginController {
     private final JoinService joinService;
 
     @PostMapping("/join")
