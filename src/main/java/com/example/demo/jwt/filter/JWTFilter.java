@@ -3,6 +3,7 @@ package com.example.demo.jwt.filter;
 import com.example.demo.dto.member.MemberDTO;
 import com.example.demo.jwt.util.CustomUserDetails;
 import com.example.demo.jwt.util.JWTUtil;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
@@ -37,9 +39,21 @@ public class JWTFilter extends OncePerRequestFilter {
             return;
         }
 
-        if (isExpired(token)) {
-            filterChain.doFilter(request, response);
+        try {
+            jwtUtil.isExpired(token);
+        } catch (ExpiredJwtException e) {
+            PrintWriter writer = response.getWriter();
+            writer.print("access token이 만료되었습니다.");
+
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
+        }
+
+        if (!isAccess(token)) {
+            PrintWriter writer = response.getWriter();
+            writer.print("유효하지 않은 access token 입니다.");
+
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
         MemberDTO.forUserDetails memberDto = createMemberDtoByToken(token);
@@ -49,6 +63,13 @@ public class JWTFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
         filterChain.doFilter(request, response);
+    }
+
+    private Boolean isAccess(String token) {
+        if (jwtUtil.getCategory(token).equals("access")) {
+            return true;
+        }
+        return false;
     }
 
     private MemberDTO.forUserDetails createMemberDtoByToken(String token) {

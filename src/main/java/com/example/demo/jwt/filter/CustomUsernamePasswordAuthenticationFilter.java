@@ -69,6 +69,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         List<String> list = new ArrayList<>();
         list.add(access);
         list.add(refresh);
+
         return list;
     }
 
