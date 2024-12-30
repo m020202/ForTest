@@ -24,16 +24,14 @@ public class JWTFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authorization = request.getHeader("Authorization");
+        String token = request.getHeader("Authorization");
 
-        if (isValidated(authorization) == false) {
+        if (isValidated(token) == false) {
             filterChain.doFilter(request, response);
             return ;
         }
 
-        String token = authorization.split(" ")[1];
-
-        if (!isInRedis(jwtUtil.getName(token), authorization)) {
+        if (!isInRedis(jwtUtil.getName(token), token)) {
             filterChain.doFilter(request, response);
             System.out.println("Redis에 없음!!");
             return;
