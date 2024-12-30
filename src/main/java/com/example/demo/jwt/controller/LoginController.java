@@ -11,11 +11,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,7 +33,7 @@ public class LoginController {
 
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
-        String token = request.getHeader("Authorization").split(" ")[1];
+        String token = request.getHeader("Authorization");
         loginService.logout(token);
 
         return "로그아웃 성공!";
@@ -60,10 +61,12 @@ public class LoginController {
         if (!isRefresh(refresh)) {
             return new ResponseEntity<>("유효하지 않은 Refresh Token 입니다.", HttpStatus.BAD_REQUEST);
         }
-
-        String newAccessToken = createNewAccessToken(refresh);
+        List<String> newTokens = createNewAccessToken(refresh);
+        String newAccessToken = newTokens.get(0);
+        String newRefreshToken = newTokens.get(1);
 
         response.setHeader("Authorization", newAccessToken);
+        response.addCookie(createCookie("Refresh", newRefreshToken));
         redisTemplate.opsForValue().set(jwtUtil.getName(refresh), newAccessToken);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -78,11 +81,25 @@ public class LoginController {
         return true;
     }
 
-    private String createNewAccessToken(String refresh) {
+    private List<String> createNewAccessToken(String refresh) {
         String name = jwtUtil.getName(refresh);
         String role = jwtUtil.getRole(refresh);
 
-        return jwtUtil.createJwt("access", name, role, 600000L);
+        String accessToken = jwtUtil.createJwt("access", name, role, 600000L);
+        String refreshToken = jwtUtil.createJwt("refresh", name, role, 86400000L);
+        List<String> list = new ArrayList<>();
+        list.add(accessToken);
+        list.add(refreshToken);
+
+        return list;
+    }
+
+    private Cookie createCookie(String key, String value) {
+        Cookie cookie = new Cookie(key, value);
+        cookie.setMaxAge(24 * 60 * 60);
+        cookie.setHttpOnly(true);
+
+        return cookie;
     }
 }
 
