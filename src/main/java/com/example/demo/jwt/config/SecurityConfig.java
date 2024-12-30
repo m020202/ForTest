@@ -49,7 +49,7 @@ public class SecurityConfig {
                         .disable())
                 .logout((auth) -> auth.disable())
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/join").permitAll()
+                        .requestMatchers("/login", "/join", "/reissue").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement((session) -> session
