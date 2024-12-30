@@ -8,6 +8,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
     private final LoginService loginService;
     private final JWTUtil jwtUtil;
+    private final RedisTemplate redisTemplate;
 
     @PostMapping("/join")
     public String join(@RequestBody JoinDTO joinDTO) {
@@ -60,7 +62,9 @@ public class LoginController {
         }
 
         String newAccessToken = createNewAccessToken(refresh);
+
         response.setHeader("Authorization", newAccessToken);
+        redisTemplate.opsForValue().set(jwtUtil.getName(refresh), newAccessToken);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -77,6 +81,7 @@ public class LoginController {
     private String createNewAccessToken(String refresh) {
         String name = jwtUtil.getName(refresh);
         String role = jwtUtil.getRole(refresh);
+
         return jwtUtil.createJwt("access", name, role, 600000L);
     }
 }
