@@ -81,7 +81,7 @@ public class JWTFilter extends OncePerRequestFilter {
     }
 
     private Boolean isValidated(String authorization) {
-        if (authorization == null || !authorization.startsWith("Bearer ")) {
+        if (authorization == null) {
             return false;
         }
 
