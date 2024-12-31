@@ -52,6 +52,11 @@ public class LoginController {
             return new ResponseEntity<>("Refresh Token이 없습니다", HttpStatus.BAD_REQUEST);
         }
 
+        // Refresh 토큰이 redis에 저장된 값과 동일한지 체크
+        if (!refresh.equals(redisTemplate.opsForValue().get("Refresh:" + jwtUtil.getName(refresh)))) {
+            return new ResponseEntity<>("Refresh Token이 유효하지 않습니다", HttpStatus.BAD_REQUEST);
+        }
+
         try {
             jwtUtil.isExpired(refresh);
         } catch (ExpiredJwtException e) {
@@ -67,8 +72,8 @@ public class LoginController {
 
         response.setHeader("Authorization", newAccessToken);
         response.addCookie(createCookie("Refresh", newRefreshToken));
-        redisTemplate.opsForValue().set(jwtUtil.getName(refresh), newAccessToken);
-
+        redisTemplate.opsForValue().set("Access:" + jwtUtil.getName(refresh), newAccessToken);
+        redisTemplate.opsForValue().set("Refresh:" + jwtUtil.getName(refresh), newRefreshToken);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

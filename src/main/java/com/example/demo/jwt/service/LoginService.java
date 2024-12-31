@@ -39,9 +39,17 @@ public class LoginService {
     @Transactional
     public void logout(String token) {
         String name = jwtUtil.getName(token);
-        if (redisTemplate.opsForValue().get(name) == null) {
+
+        // Access 토큰 삭제
+        if (redisTemplate.opsForValue().get("Access:" + name) == null) {
             return;
         }
-        redisTemplate.delete(name);
+        redisTemplate.delete("Access:" + name);
+
+        // Refresh 토큰 삭제
+        if (redisTemplate.opsForValue().get("Refresh:" + name) == null) {
+            return;
+        }
+        redisTemplate.delete("Refresh:" + name);
     }
 }

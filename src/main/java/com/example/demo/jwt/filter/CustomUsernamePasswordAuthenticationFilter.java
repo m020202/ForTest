@@ -52,8 +52,8 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         response.setStatus(HttpStatus.OK.value());
 
         // 생성된 토큰 redis에 저장
-        redisTemplate.opsForValue().set(authentication.getName(), accessToken, Duration.ofSeconds(60 * 60 * 10L));
-
+        redisTemplate.opsForValue().set("Access:" + authentication.getName(), accessToken, Duration.ofSeconds(600000L));
+        redisTemplate.opsForValue().set("Refresh:" + authentication.getName(), refreshToken, Duration.ofSeconds(86400000L));
     }
 
     private List<String> createToken(Authentication authentication) {

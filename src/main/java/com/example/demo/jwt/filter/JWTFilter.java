@@ -87,7 +87,7 @@ public class JWTFilter extends OncePerRequestFilter {
     }
 
     private Boolean isInRedis(String name, String token) {
-        String value = (String) redisTemplate.opsForValue().get(name);
+        String value = (String) redisTemplate.opsForValue().get("Access:" + name);
 
         if (value.equals(token)) {
             return true;
