@@ -86,7 +86,7 @@ public class CustomLogoutFilter extends GenericFilterBean {
         }
 
         // 쿠키 초기화
-        Cookie cookie = new Cookie("refresh", null);
+        Cookie cookie = new Cookie("Refresh", null);
         cookie.setMaxAge(0);
         cookie.setPath("/");
         response.addCookie(cookie);
