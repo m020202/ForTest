@@ -31,13 +31,13 @@ public class LoginController {
         return "회원가입 성공!";
     }
 
-    @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-        loginService.logout(token);
-
-        return "로그아웃 성공!";
-    }
+//    @PostMapping("/logout")
+//    public String logout(HttpServletRequest request) {
+//        String token = request.getHeader("Authorization");
+//        loginService.logout(token);
+//
+//        return "로그아웃 성공!";
+//    }
 
     @PostMapping("/reissue")
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
