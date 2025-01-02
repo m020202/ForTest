@@ -35,16 +35,21 @@ public class CustomLogoutFilter extends GenericFilterBean {
             return;
         }
 
-        deleteAccess(httpServletRequest, httpServletResponse);
+        if (!deleteAccess(httpServletRequest, httpServletResponse)) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
         deleteRefresh(httpServletRequest, httpServletResponse);
     }
 
-    private void deleteAccess(HttpServletRequest request, HttpServletResponse response) {
+    private Boolean deleteAccess(HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader("Authorization");
 
-        if (redisTemplate.opsForValue().get("Access:" + jwtUtil.getName(token)).equals(token)) {
-            redisTemplate.delete("Access:" + jwtUtil.getName(token));
+        if (!redisTemplate.opsForValue().get("Access:" + jwtUtil.getName(token)).equals(token)) {
+            return false;
         }
+        redisTemplate.delete("Access:" + jwtUtil.getName(token));
+        return true;
     }
 
     private void deleteRefresh(HttpServletRequest request, HttpServletResponse response) {
