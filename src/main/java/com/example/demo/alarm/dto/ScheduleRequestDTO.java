@@ -15,6 +15,6 @@ public class ScheduleRequestDTO {
     public static class create {
         private String name;
         private List<String> repeatDays;
-        private LocalTime time;
+        private String time;
     }
 }
