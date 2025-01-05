@@ -49,13 +49,13 @@ public class ScheduleService {
         Schedule schedule = Schedule.builder()
                 .name(dto.getName())
                 .repeatDays(repeatDays)
-                .time(dto.getTime())
+                .time(LocalTime.parse(dto.getTime()))
                 .build();
 
         scheduleRepository.save(schedule);
     }
 
     public List<Schedule> findByDayAndTime(DayOfWeek dayOfWeek, LocalTime time) {
-        return null;
+        return scheduleRepository.findByDayAndTime(dayOfWeek.name(), time);
     }
 }
