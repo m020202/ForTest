@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class ScheduleController {
-    private ScheduleService scheduleService;
+    private final ScheduleService scheduleService;
 
     @PostMapping("/schedule/create")
     public String create(@RequestBody ScheduleRequestDTO.create dto) {
+        scheduleService.create(dto);
+
         return "OK!";
     }
 }
