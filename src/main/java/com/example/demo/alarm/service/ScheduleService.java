@@ -1,6 +1,5 @@
 package com.example.demo.alarm.service;
 
-import com.example.demo.alarm.domain.DayOfWeek;
 import com.example.demo.alarm.domain.Schedule;
 import com.example.demo.alarm.dto.ScheduleRequestDTO;
 import com.example.demo.alarm.repository.ScheduleRepository;
@@ -8,7 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -47,8 +49,13 @@ public class ScheduleService {
         Schedule schedule = Schedule.builder()
                 .name(dto.getName())
                 .repeatDays(repeatDays)
+                .time(dto.getTime())
                 .build();
 
         scheduleRepository.save(schedule);
+    }
+
+    public List<Schedule> findByDayAndTime(DayOfWeek dayOfWeek, LocalTime time) {
+        return null;
     }
 }

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalTime;
 import java.util.List;
 
 public class ScheduleRequestDTO {
@@ -14,5 +15,6 @@ public class ScheduleRequestDTO {
     public static class create {
         private String name;
         private List<String> repeatDays;
+        private LocalTime time;
     }
 }

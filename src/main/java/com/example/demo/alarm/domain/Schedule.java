@@ -3,6 +3,8 @@ package com.example.demo.alarm.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.Set;
 
 @Entity
@@ -19,4 +21,5 @@ public class Schedule {
     @CollectionTable(name = "schedule_repeat_day", joinColumns = @JoinColumn(name = "schedule_id"))
     @Enumerated(EnumType.STRING)
     private Set<DayOfWeek> repeatDays;
+    private LocalTime time; // 반복 시간
 }
