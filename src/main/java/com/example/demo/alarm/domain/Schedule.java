@@ -18,11 +18,11 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    //    @ElementCollection(targetClass = DayOfWeek.class)
-//    @CollectionTable(name = "schedule_repeat_day", joinColumns = @JoinColumn(name = "schedule_id"))
-//    @Enumerated(EnumType.STRING)
-//    private Set<DayOfWeek> repeatDays;
-    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RepeatDay> repeatDayList;
+    @ElementCollection(targetClass = DayOfWeek.class)
+    @CollectionTable(name = "schedule_repeat_day", joinColumns = @JoinColumn(name = "schedule_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<DayOfWeek> repeatDays;
+//    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<RepeatDay> repeatDayList;
     private LocalTime time; // 반복 시간
 }

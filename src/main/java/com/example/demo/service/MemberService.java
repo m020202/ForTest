@@ -15,4 +15,8 @@ public class MemberService {
 
         return member.getId();
     }
+
+    public Member findByName(String name) {
+        return memberRepository.findByName(name);
+    }
 }
