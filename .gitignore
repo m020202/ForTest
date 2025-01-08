@@ -35,4 +35,4 @@ out/
 
 ### VS Code ###
 .vscode/
-/src/main/resources/worryboxFirebaseKey.json
+/src/main/resources/worryBoxFirebaseKey.json
