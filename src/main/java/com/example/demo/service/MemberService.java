@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.domain.Member;
 import com.example.demo.repository.MemberRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,11 @@ public class MemberService {
     }
 
     public Member findByName(String name) {
+        return memberRepository.findByName(name);
+    }
+
+    public Member getMember(HttpServletRequest httpServletRequest) {
+        String name = httpServletRequest.getUserPrincipal().getName();
         return memberRepository.findByName(name);
     }
 }
